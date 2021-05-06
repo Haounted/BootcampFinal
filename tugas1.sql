@@ -29,31 +29,30 @@ create table Posts(
 	PostContent varchar(255),
 	PostDate date
 	constraint PostPK primary key(PostId),
-	constraint UserFK1 foreign key(UserId) references Users(UserId)
-
+	constraint PostFK foreign key(UserId) references Users(UserId)
 )
 
 create table Friends(
 	FriendId char(5),
 	UserId char(5),
 	constraint FriendPK primary key(FriendId),
-	constraint UserFK2 foreign key(UserId) references Users(UserId)
+	constraint FriendFK foreign key(UserId) references Users(UserId)
 )
 
 create table PageLikes(
 	PageId char(5),
 	UserId char(5),
-	constraint PageLikesPK primary key(PageId,UserId),
-	constraint PageFK1 foreign key(PageId) references Pages(PageId),
-	constraint UserFK3 foreign key(UserId) references Users(UserId)
+	constraint PageLikesPK primary key(PageId),
+	constraint PageLikesFK foreign key(PageId) references Pages(PageId),
+	constraint PageLikesFK1 foreign key(UserId) references Users(UserId)
 )
 
 create table PostLikes(
 	PostId char(5),
 	UserId char(5),
-	constraint PostLikesPK primary key(PostId,UserId),
-	constraint PostFK1 foreign key(PostId) references Posts(PostId),
-	constraint UserFK4 foreign key(UserId) references Users(UserId)
+	constraint PostLikesPK primary key(PostId),
+	constraint PostLikesFK foreign key(PostId) references Posts(PostId),
+	constraint PostLikesFK1 foreign key(UserId) references Users(UserId)
 )
 
 create table Photos(
@@ -61,14 +60,15 @@ create table Photos(
 	PostId char(5),
 	ImageContent varchar(255),
 	constraint PhotoPK primary key(PhotoId),
-	constraint PostFK3 foreign key(PostId) references Posts(PostId)
+	constraint PhotoFK foreign key(PostId) references Posts(PostId)
 )
 
 create table Shares(
 	PostId char(5),
 	UserId char(5),
-	constraint PostFK4 foreign key(PostId) references Posts(PostId),
-	constraint UserFK5 foreign key(UserId) references Users(UserId)
+	constraint SharesPK primary key(PostId),
+	constraint SharesFK foreign key(PostId) references Posts(PostId),
+	constraint SharesFK1 foreign key(UserId) references Users(UserId)
 )
 
 create table Comments(
@@ -78,16 +78,16 @@ create table Comments(
 	CommentDate date,
 	CommentContent varchar(255),
 	constraint CommentPK primary key(CommentId),
-	constraint PostFK5 foreign key(PostId) references Posts(PostId),
-	constraint UserFK6 foreign key(UserId) references Users(UserId)
+	constraint CommentFK foreign key(PostId) references Posts(PostId),
+	constraint CommentFK1 foreign key(UserId) references Users(UserId)
 )
 
 create table CommentLikes(
 	CommentId char(5),
 	UserId char(5),
-	constraint CommentLikesPK primary key(CommentId, UserId),
-	constraint CommentFK foreign key(CommentId) references Comments(CommentId),
-	constraint UserFK7 foreign key(UserId) references Users(UserId)
+	constraint CommentLikesPK primary key(CommentId),
+	constraint CommentLikesFK foreign key(CommentId) references Comments(CommentId),
+	constraint CommentLikesFK1 foreign key(UserId) references Users(UserId)
 )
 
 select * from Users
